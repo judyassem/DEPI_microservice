@@ -1,0 +1,23 @@
+name: Deploy react
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker build -t judyassem/react-test -f Dockerfile.dev .
+      - run: docker run -e CI=true judyassem/react-test npm run test
+ 
+      - run: docker build -t judyassem/multi-client ./client
+      - run: docker build -t judyassem/multi-nginx ./nginx
+      - run: docker build -t judyassem/multi-server ./server
+      - run: docker build -t judyassem/multi-worker ./worker
+ 
+      - run: docker push judyassem/multi-client 
+      - run: docker push judyassem/multi-nginx 
+      - run: docker push judyassem/multi-server 
+      - run: docker push judyassem/multi-worker 
