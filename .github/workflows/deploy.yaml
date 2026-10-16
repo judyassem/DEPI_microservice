@@ -1,4 +1,4 @@
-name: Deploy react
+name: Deploy microservices
 on:
   push:
     branches:
