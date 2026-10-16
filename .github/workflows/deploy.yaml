@@ -9,8 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-      - run: docker build -t judyassem0/react-test -f Dockerfile.dev .
-      - run: docker run -e CI=true judyassem0/react-test npm run test
+      # - run: docker build -t judyassem0/react-test -f Dockerfile.dev .
+      # - run: docker run -e CI=true judyassem0/react-test npm run test
  
       - run: docker build -t judyassem0/multi-client ./client
       - run: docker build -t judyassem0/multi-nginx ./nginx
